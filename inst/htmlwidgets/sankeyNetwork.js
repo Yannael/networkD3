@@ -100,9 +100,7 @@ HTMLWidgets.widget({
 
 
         link.append("title")
-            .html(function(d) { return "Contracting authority: "+ d.source.name +"<br>"+
-            "Contractor: "+d.target.name +"<br>" + 
-            "Contract value (€): "+format(d.value); });
+            .html(function(d) { return "Contract value (€): "+format(d.value); });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
