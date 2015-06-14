@@ -78,6 +78,9 @@ HTMLWidgets.widget({
                 d3.select(this)
                 .style("stroke-opacity", 0.5);
             })
+            .on("click", function(d) {
+                window.open(d.link);
+            })
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("stroke-opacity", 0.2);
@@ -97,8 +100,9 @@ HTMLWidgets.widget({
 
 
         link.append("title")
-            .text(function(d) { return d.source.name + d.target.name +
-                "\\n" + format(d.value); });
+            .html(function(d) { return "Contracting authority: "+ d.source.name +"<br>"+
+            "Contractor: "+d.target.name +"<br>" + 
+            "Contract value (€): "+format(d.value); });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
@@ -109,7 +113,7 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "\\n" + format(d.value); });
+            .html(function(d) { return d.name + "<br>" + format(d.value); });
 
         node.append("svg:text")
             .attr("x", -6)
