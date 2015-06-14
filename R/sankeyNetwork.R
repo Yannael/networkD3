@@ -63,8 +63,8 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         names(LinksDF) <- c("source", "target")
     }
     else if (!missing(Value)){
-        LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
-        names(LinksDF) <- c("source", "target", "value")
+        LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value],Links[, "link"])
+        names(LinksDF) <- c("source", "target", "value", "link")
     }
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
