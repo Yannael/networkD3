@@ -100,7 +100,10 @@ HTMLWidgets.widget({
 
 
         link.append("title")
-            .html(function(d) { return "Contract value (€): "+format(d.value); });
+            .html(function(d) { 
+              value=format(d.value)
+              if (value==-1) value="Unknown value"
+              return "Contract value (€): "+value; });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
