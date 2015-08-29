@@ -71,19 +71,33 @@ HTMLWidgets.widget({
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
             .style("fill", "none")
-            .style("stroke", "#000")
-            .style("stroke-opacity", 0.2)
+            .style("stroke", function(d) { 
+              value=format(d.value)
+              if (value<0) {colEdge="#F00"}
+              else {colEdge="#000"}
+              return colEdge; })
+            .style("stroke-opacity", function(d) { 
+              value=format(d.value)
+              if (value<0) {colOpacity=0.6}
+              else {colOpacity=0.2}
+              return colOpacity; })
             .sort(function(a, b) { return b.dy - a.dy; })
             .on("mouseover", function(d) {
+              value=format(d.value)
+              if (value<0) {colOpacity2=1}
+              else {colOpacity2=0.5}
                 d3.select(this)
-                .style("stroke-opacity", 0.5);
+                .style("stroke-opacity", colOpacity2);
             })
             .on("click", function(d) {
                 window.open(d.link);
             })
             .on("mouseout", function(d) {
+              value=format(d.value)
+              if (value<0) {colOpacity=0.6}
+              else {colOpacity=0.2}
                 d3.select(this)
-                .style("stroke-opacity", 0.2);
+                .style("stroke-opacity", colOpacity);
             });
 
         // draw nodes
