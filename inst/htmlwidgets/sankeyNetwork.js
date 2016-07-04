@@ -69,22 +69,23 @@ HTMLWidgets.widget({
             .enter().append("path")
             .attr("class", "link")
             .attr("d", path)
-            .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+            //.style("stroke-width", function(d) { return Math.max(1, Math.log2(d.dy+1)); })
+            .style("stroke-width", function(d) { return Math.max(4, d.dy); })
             .style("fill", "none")
             .style("stroke", function(d) { 
               value=format(d.value)
-              if (value<0) {colEdge="#F00"}
+              if (value==1) {colEdge="#F00"}
               else {colEdge="#000"}
               return colEdge; })
             .style("stroke-opacity", function(d) { 
               value=format(d.value)
-              if (value<0) {colOpacity=0.6}
+              if (value==1) {colOpacity=0.6}
               else {colOpacity=0.2}
               return colOpacity; })
             .sort(function(a, b) { return b.dy - a.dy; })
             .on("mouseover", function(d) {
               value=format(d.value)
-              if (value<0) {colOpacity2=1}
+              if (value==1) {colOpacity2=1}
               else {colOpacity2=0.5}
                 d3.select(this)
                 .style("stroke-opacity", colOpacity2);
@@ -94,7 +95,7 @@ HTMLWidgets.widget({
             })
             .on("mouseout", function(d) {
               value=format(d.value)
-              if (value<0) {colOpacity=0.6}
+              if (value==1) {colOpacity=0.6}
               else {colOpacity=0.2}
                 d3.select(this)
                 .style("stroke-opacity", colOpacity);
@@ -115,12 +116,14 @@ HTMLWidgets.widget({
 
         link.append("title")
             .html(function(d) { 
-              value=format(d.value)
-              if (value==-1) value="Unknown value"
+              value=d.value; //format(d.value)
+              if (value==1) value="Unknown value";
+              else value=Number(value).toLocaleString();
               return "Contract value (€): "+value; });
 
         node.append("rect")
-            .attr("height", function(d) { return d.dy; })
+            .attr("height", function(d) { return Math.max(4, d.dy); }) //return d.dy; })
+            //.attr("height", function(d) { return Math.max(1, Math.log2(d.dy+2)); }) //return d.dy; })
             .attr("width", sankey.nodeWidth())
             .style("fill", function(d) {
                 return d.color = color(d.name.replace(/ .*/, "")); })
